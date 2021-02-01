@@ -3,7 +3,7 @@ from flask import (
     render_template,
 )
 
-from ..app import mysql
+from ..app import db
 
 
 main = Blueprint('main', __name__)

@@ -3,7 +3,7 @@ from flask import (
     render_template,
 )
 
-from ..app import mysql
+from ..app import db
 
 
 auth = Blueprint('auth', __name__)
