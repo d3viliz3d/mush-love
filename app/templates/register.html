@@ -1,6 +1,6 @@
 {% extends "layouts/base-fullscreen.html" %}
 
-{% block title %} Register {% endblock title %}
+{% block title %}Register{% endblock title %}
 
 {% block stylesheets %}{% endblock stylesheets %}
 
@@ -16,49 +16,100 @@
         <br />
 
         <div class="auto-form-wrapper">
-          <form action="#">
+
+          {% for message in get_flashed_messages() %}
+            <div class="alert alert-warning">
+              <button
+                type="button"
+                class="close"
+                data-dismiss="alert">
+                x
+              </button>
+              {{ message }}
+            </div>
+          {% endfor %}
+
+          <form method="POST" action="{{ url_for('auth.register') }}">
+            {{ form.csrf_token }}
+
             <div class="form-group">
+              <label class="label">{{ form.username.label.text }}</label>
               <div class="input-group">
-                <input type="text" class="form-control" placeholder="Username">
+                {{ form.username(placeholder="username", class='form-control') }}
                 <div class="input-group-append">
                   <span class="input-group-text">
                     <i class="mdi mdi-check-circle-outline"></i>
                   </span>
                 </div>
               </div>
+              <ul class="errors">
+                {% for error in form.username.errors %}
+                  <li>{{ error }}</li>
+                {% endfor %}
+              </ul>
             </div>
+
             <div class="form-group">
+              <label class="label">{{ form.email.label.text }}</label>
               <div class="input-group">
-                <input type="password" class="form-control" placeholder="Password">
+                {{ form.email(placeholder="example@gmail.com", class='form-control') }}
                 <div class="input-group-append">
                   <span class="input-group-text">
                     <i class="mdi mdi-check-circle-outline"></i>
                   </span>
                 </div>
               </div>
+              <ul class="errors">
+                {% for error in form.email.errors %}
+                  <li>{{ error }}</li>
+                {% endfor %}
+              </ul>
             </div>
+
             <div class="form-group">
+              <label class="label">{{ form.password.label.text }}</label>
               <div class="input-group">
-                <input type="password" class="form-control" placeholder="Confirm Password">
+                {{ form.password(placeholder="********", class='form-control') }}
                 <div class="input-group-append">
                   <span class="input-group-text">
                     <i class="mdi mdi-check-circle-outline"></i>
                   </span>
                 </div>
               </div>
+              <ul class="errors">
+                {% for error in form.password.errors %}
+                  <li>{{ error }}</li>
+                {% endfor %}
+              </ul>
             </div>
-            <div class="form-group d-flex justify-content-center">
+            <div class="form-group">
+              <label class="label">{{ form.confirm.label.text }}</label>
+              <div class="input-group">
+                {{ form.confirm(placeholder="********", class='form-control') }}
+                <div class="input-group-append">
+                  <span class="input-group-text">
+                    <i class="mdi mdi-check-circle-outline"></i>
+                  </span>
+                </div>
+              </div>
+              <ul class="errors">
+                {% for error in form.confirm.errors %}
+                  <li>{{ error }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+            <!--<div class="form-group d-flex justify-content-center">
               <div class="form-check form-check-flat mt-0">
                 <label class="form-check-label">
-                  <input type="checkbox" class="form-check-input" checked> I agree to the terms </label>
+                  <input type="checkbox" class="form-check-input" checked>I agree to the terms</label>
               </div>
-            </div>
+            </div>-->
             <div class="form-group">
-              <button class="btn btn-primary submit-btn btn-block">Register</button>
+              {{ form.submit(class="btn btn-primary submit-btn btn-block") }}
             </div>
             <div class="text-block text-center my-3">
-              <span class="text-small font-weight-semibold">Already have and account ?</span>
-              <a href="login.html" class="text-black text-small">Login</a>
+              <span class="text-small font-weight-semibold">Already have and account?</span>
+              <a href="{{ url_for('auth.login') }}" class="text-black text-small">Login</a>
             </div>
           </form>
         </div>

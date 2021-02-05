@@ -10,26 +10,26 @@ login_manager = LoginManager()
 
 
 def create_app():
-	"""Construct the core app object."""
-	app = Flask(__name__)
+    """Construct the core app object."""
+    app = Flask(__name__)
 
-	# Application Configuration
-	app.config.from_pyfile('config.py')
+    # Application Configuration
+    app.config.from_pyfile("config.py")
 
-	# Initialize Plugins
-	db.init_app(app)
-	migrate.init_app(app, db)
-	#login_manager.init_app(app)
-	
-	# register all blueprints
-	from .views import blueprints
-	for bp in blueprints:
-		app.register_blueprint(bp)
+    # Initialize Plugins
+    db.init_app(app)
+    migrate.init_app(app, db)
 
-	# Create Database Models
-	#db.create_all()
+    # register all blueprints
+    from .views import blueprints
 
-	return app
+    for bp in blueprints:
+        app.register_blueprint(bp)
+
+    login_manager.init_app(app)
+    login_manager.login_view = "auth.login"
+
+    return app
 
 
 app = create_app()

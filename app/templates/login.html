@@ -9,38 +9,65 @@
     <div class="content-wrapper d-flex align-items-center auth auth-bg-1 theme-one">
       <div class="row w-100">
         <div class="col-lg-4 mx-auto">
-          
+
           <h2 class="text-center text-white mb-4">Login</h2>
           <p class="text-center text-white">
             Add your credentials
           </p>
           <br />
           <div class="auto-form-wrapper">
-            <form action="#">
+
+            {% for message in get_flashed_messages() %}
+              <div class="alert alert-warning">
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="alert">
+                    x
+                  </button>
+                {{ message }}
+              </div>
+            {% endfor %}
+
+            <form method="POST" action="{{ url_for('auth.login') }}">
+              {{ form.csrf_token }}
+
               <div class="form-group">
-                <label class="label">Username</label>
+                <label class="label">{{ form.email.label.text }}</label>
                 <div class="input-group">
-                  <input type="text" class="form-control" placeholder="Username">
+                  {{ form.email(placeholder="example@gmail.com", class='form-control') }}
                   <div class="input-group-append">
                     <span class="input-group-text">
                       <i class="mdi mdi-check-circle-outline"></i>
                     </span>
                   </div>
                 </div>
+                <ul class="errors">
+                  {% for error in form.email.errors %}
+                    <li>{{ error }}</li>
+                  {% endfor %}
+                </ul>
               </div>
+
               <div class="form-group">
-                <label class="label">Password</label>
+                <label class="label">{{ form.password.label.text }}</label>
                 <div class="input-group">
-                  <input type="password" class="form-control" placeholder="*********">
+                  {{ form.password(placeholder="********", class='form-control') }}
                   <div class="input-group-append">
                     <span class="input-group-text">
                       <i class="mdi mdi-check-circle-outline"></i>
                     </span>
                   </div>
                 </div>
+                <ul class="errors">
+                  {% for error in form.password.errors %}
+                    <li>{{ error }}</li>
+                  {% endfor %}
+                </ul>
               </div>
+
               <div class="form-group">
-                <button class="btn btn-primary submit-btn btn-block">Login</button>
+                {{ form.submit(class="btn btn-primary submit-btn btn-block") }}
               </div>
               <div class="form-group d-flex justify-content-between">
                 <div class="form-check form-check-flat mt-0">
@@ -49,25 +76,16 @@
                 </div>
                 <a href="#" class="text-small forgot-password text-black">Forgot Password</a>
               </div>
-              <div class="form-group">
+              <!--<div class="form-group">
                 <button class="btn btn-block g-login">
                   <img class="mr-3" src="/static/assets/images/file-icons/icon-google.svg" alt="">Log in with Google</button>
-              </div>
+              </div>-->
               <div class="text-block text-center my-3">
-                <span class="text-small font-weight-semibold">Not a member ?</span>
-                <a href="register.html" class="text-black text-small">Create new account</a>
+                <span class="text-small font-weight-semibold">Not a member?</span>
+                <a href="{{ url_for('auth.register') }}" class="text-black text-small">Create new account</a>
               </div>
             </form>
           </div>
-          <ul class="auth-footer">
-            <li>
-              <a target="_blank" href="https://github.com/app-generator/jinja-star-admin">Jinja Star Admin</a>
-            </li>
-          </ul>
-          <p class="footer-text text-center">
-            &copy; <a href="https://bit.ly/2UTgih5" target="_blank">BootstrapDash</a> 
-            - Coded by <a href="https://appseed.us" target="_blank">AppSeed</a>
-          </p>
 
         </div>
       </div>
