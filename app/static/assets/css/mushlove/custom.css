@@ -1,0 +1,15 @@
+.sidebar > .nav > .nav-item:not(.nav-profile) > .nav-link:before {
+    display: none;
+}
+
+.sidebar > .nav .nav-item .nav-link {
+    padding-left: 30px;
+}
+
+.sidebar > .nav:not(.sub-menu) > .nav-item:hover:not(.nav-profile):not(.hover-open) > .nav-link:not([aria-expanded="true"]) {
+    padding-left: 35px;
+}
+
+.sidebar > .nav .nav-item .nav-link .menu-icon {
+    display: inline-block;
+}
